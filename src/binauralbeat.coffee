@@ -1,6 +1,8 @@
 ###
-Author: Cole Reed
+BinauralBeatJS
 v1.0
+Author: Cole Reed
+ichabodcole (AT) gmail.com
 
 Copyright (c) 2013 Cole Reed, https://github.com/ichabodcole/
 
