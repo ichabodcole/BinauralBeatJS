@@ -42,7 +42,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       this.rightChannel = 0;
       this.defaultfadeLength = 2;
       this.masterGain = this.context.createGain();
-      this.channelMerger = this.context.createChannelMerger();
       this.compressor = this.context.createDynamicsCompressor();
       return this.init();
     }

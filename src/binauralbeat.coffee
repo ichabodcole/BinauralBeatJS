@@ -32,7 +32,6 @@ class window.BinauralBeat
 		@rightChannel = 0
 		@defaultfadeLength = 2
 		@masterGain = @context.createGain()
-		@channelMerger = @context.createChannelMerger()
 		@compressor = @context.createDynamicsCompressor()
 
 		return @init()
