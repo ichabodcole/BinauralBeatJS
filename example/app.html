@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <title>Binaural-JS</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/custom_styles.css">
+    <script src="bootstrap/js/jquery-1.9.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="hero-unit">
+        <h1>BinauralBeatJS Demo</h1>
+            by Cole Reed
+            <h4>Choose your Wave</h4>
+
+            <div class="btn-group" data-toggle="buttons-radio">
+                <button id="btn-sine" class="btn btn-primary">Sine</button>
+                <button id="btn-square" class="btn btn-primary">Square</button>
+                <button id="btn-sawtooth" class="btn btn-primary">Sawtooth</button>
+                <button id="btn-triangle" class="btn btn-primary">Triangle</button>
+            </div>
+            <div class="sliders">
+                <label for="sldr-freq">Frequency</label>
+                <input class="slider" id="sldr-freq" type="range" min="0" max="1500" steps="1" value="440" />
+                <label for="sldr-beat">Beat Rate</label>
+                <input class="slider" id="sldr-beat" type="range" min="0" max="20" steps="1" value="5" />
+                <label for="sldr-volume">Volume</label>
+                <input class="slider" id="sldr-volume" type="range" min="0" max="100" steps="1" value="50" />
+            </div>
+        </div>
+    </div>
+    <script src="binauralbeat.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

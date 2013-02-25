@@ -28,16 +28,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class window.BinauralBeat
 	constructor: (@context, @freq=440, @beat=5, @waveType="sine")->
 		@userVolume = 1
-		@leftChannel  = 0
-		@rightChannel = 0
+		@leftChannel  = null
+		@rightChannel = null
 		@defaultfadeLength = 2
 		@masterGain = @context.createGain()
 		@compressor = @context.createDynamicsCompressor()
-
+		@channelMerger = @context.createChannelMerger()
+		@waveTypes = {sine:0, square:1, sawtooth:2, triangle:3}
 		return @init()
 
 	init: ->
 		@createChannels()
+		@setWaveType(@waveType)
 		@mergeChannels()
 		@channelMerger.connect(@masterGain)
 
@@ -95,7 +97,8 @@ class window.BinauralBeat
 		null
 
 	setWaveType: (@waveType)->
-		@leftChannel.type  = @rightChannel.type = @waveType
+		@waveType = @waveTypes[@waveType]
+		@leftChannel.type = @rightChannel.type = @waveType
 
 	setVolume: (volume)->
 		@userVolume = volume
