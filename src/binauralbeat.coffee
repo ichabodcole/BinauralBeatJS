@@ -26,7 +26,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ###
 class window.BinauralBeat
-	constructor: (@context, @freq, @beat)->
+	constructor: (@context, @freq=440, @beat=5, @waveType="sine")->
 		@userVolume = 1
 		@leftChannel  = 0
 		@rightChannel = 0
@@ -40,7 +40,6 @@ class window.BinauralBeat
 		@createChannels()
 		@mergeChannels()
 		@channelMerger.connect(@masterGain)
-		@start()
 
 	createChannels: ->
 		@leftChannel  = @createChannel(@getFreqLeft())
@@ -82,7 +81,7 @@ class window.BinauralBeat
 		@rightChannel.stop(0)
 		null
 
-	#Public Methods	
+	#Public Methods
 	getNode: ->
 		return @masterGain
 
@@ -94,6 +93,9 @@ class window.BinauralBeat
 		@leftChannel.frequency.value = @getFreqLeft()
 		@rightChannel.frequency.value = @getFreqRight()
 		null
+
+	setWaveType: (@waveType)->
+		@leftChannel.type  = @rightChannel.type = @waveType
 
 	setVolume: (volume)->
 		@userVolume = volume
