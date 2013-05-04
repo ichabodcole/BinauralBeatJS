@@ -28,107 +28,106 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class window.BinauralBeat
 	constructor: (@context, @freq=440, @beat=5, @waveType="sine")->
 		@userVolume = 1
-		@leftChannel  = null
-		@rightChannel = null
-		@defaultfadeLength = 2
+		# @leftChannel  = null
+		# @rightChannel = null
+		# @defaultfadeLength = 2
 		@masterGain = @context.createGain()
-		@compressor = @context.createDynamicsCompressor()
-		@channelMerger = @context.createChannelMerger()
-		@waveTypes = {sine:0, square:1, sawtooth:2, triangle:3}
-		return @init()
+		# @compressor = @context.createDynamicsCompressor()
+		# @channelMerger = @context.createChannelMerger()
+		# @waveTypes = {sine:0, square:1, sawtooth:2, triangle:3}
 
-	init: ->
-		@createChannels()
-		@setWaveType(@waveType)
-		@mergeChannels()
-		@channelMerger.connect(@masterGain)
+		# @createChannels()
+		# @setWaveType(@waveType)
+		# @mergeChannels()
+		# return @channelMerger.connect(@masterGain)
 
-	createChannels: ->
-		@leftChannel  = @createChannel(@getFreqLeft())
-		@rightChannel = @createChannel(@getFreqRight())
-		null
+	# createChannels: ->
+	# 	@leftChannel  = @createChannel(@getFreqLeft())
+	# 	@rightChannel = @createChannel(@getFreqRight())
+	# 	null
 
-	createChannel: (freq)->
-		osc = @context.createOscillator()
-		osc.frequency.value = freq
-		return osc
+	# createChannel: (freq)->
+	# 	osc = @context.createOscillator()
+	# 	osc.frequency.value = freq
+	# 	return osc
 
-	mergeChannels: ->
-		@leftChannel.connect(@channelMerger, 0, 0)
-		@rightChannel.connect(@channelMerger, 0, 1)
-		null
+	# mergeChannels: ->
+	# 	@leftChannel.connect(@channelMerger, 0, 0)
+	# 	@rightChannel.connect(@channelMerger, 0, 1)
+	# 	null
 
-	getFreqLeft: ->
-		freq = @freq - @getBeatSplit()
-		return freq
+	# getFreqLeft: ->
+	# 	freq = @freq - @getBeatSplit()
+	# 	return freq
 
-	getFreqRight: ->
-		freq = @freq + @getBeatSplit()
-		return freq
+	# getFreqRight: ->
+	# 	freq = @freq + @getBeatSplit()
+	# 	return freq
 
-	getBeatSplit: ->
-		return @beat / 2
+	# getBeatSplit: ->
+	# 	return @beat / 2
 
-	setGain: (gain)->
-		@masterGain.gain.value = gain
-		null
+	# setGain: (gain)->
+	# 	@masterGain.gain.value = gain
+	# 	null
 
-	start: ->
-		@leftChannel.start(0)
-		@rightChannel.start(0)
-		null
+	# start: ->
+	# 	@leftChannel.start(0)
+	# 	@rightChannel.start(0)
+	# 	null
 
-	stop: ->
-		@leftChannel.stop(0)
-		@rightChannel.stop(0)
-		null
+	# stop: ->
+	# 	@leftChannel.stop(0)
+	# 	@rightChannel.stop(0)
+	# 	null
 
-	#Public Methods
+	# #Public Methods
 	getNode: ->
 		return @masterGain
+		null
 
 	setBeat: (@beat)->
-		@setFrequency(@freq)
+		# @setFrequency(@freq)
 		null
 
 	setFrequency: (@freq)->
-		@leftChannel.frequency.value = @getFreqLeft()
-		@rightChannel.frequency.value = @getFreqRight()
+		# @leftChannel.frequency.value = @getFreqLeft()
+		# @rightChannel.frequency.value = @getFreqRight()
 		null
 
-	setWaveType: (@waveType)->
-		@waveType = @waveTypes[@waveType]
-		@leftChannel.type = @rightChannel.type = @waveType
+	# setWaveType: (@waveType)->
+	# 	@waveType = @waveTypes[@waveType]
+	# 	@leftChannel.type = @rightChannel.type = @waveType
 
 	setVolume: (volume)->
-		@userVolume = volume
-		@setGain(volume)
+		# @userVolume = volume
+		# @setGain(volume)
 		null
 
-	mute: (bool)->
-		@setGain(0)
-		null
+	# mute: (bool)->
+	# 	@setGain(0)
+	# 	null
 
-	unmute: ->
-		@setGain(@userVolume)
-		null
+	# unmute: ->
+	# 	@setGain(@userVolume)
+	# 	null
 
-	fadeTo: (value, fadeLength)->
-		fadeLength = fadeLength || @defaultfadeLength
-		currentTime = @context.currentTime
-		#time the fade should complete
-		fadeTime = currentTime + fadeLength
-		#set the start time
-		@masterGain.gain.setValueAtTime(@userVolume, currentTime)
-		@masterGain.gain.linearRampToValueAtTime(value, fadeTime)
+	# fadeTo: (value, fadeLength)->
+	# 	fadeLength = fadeLength || @defaultfadeLength
+	# 	currentTime = @context.currentTime
+	# 	#time the fade should complete
+	# 	fadeTime = currentTime + fadeLength
+	# 	#set the start time
+	# 	@masterGain.gain.setValueAtTime(@userVolume, currentTime)
+	# 	@masterGain.gain.linearRampToValueAtTime(value, fadeTime)
 
-	fadeOut: (fadeLength)->
-		fadeLength = fadeLength || @defaultfadeLength
-		@fadeTo(0, fadeLength)
+	# fadeOut: (fadeLength)->
+	# 	fadeLength = fadeLength || @defaultfadeLength
+	# 	@fadeTo(0, fadeLength)
 
-	fadeIn: (fadeLength)->
-		fadeLength = fadeLength || @defaultfadeLength
-		@fadeTo(@userVolume, fadeLength)
+	# fadeIn: (fadeLength)->
+	# 	fadeLength = fadeLength || @defaultfadeLength
+	# 	@fadeTo(@userVolume, fadeLength)
 
-	end: ->
-		@stop()
+	# end: ->
+	# 	@stop()

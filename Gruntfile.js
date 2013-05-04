@@ -11,8 +11,8 @@ module.exports = function(grunt){
     mocha: {
       all: ['test/**/*.html'],
       options: {
-        reporter: 'Nyan',
-        run: true
+        reporter: 'Nyan'
+        // run: true
       }
     },
     coffee: {
@@ -52,8 +52,8 @@ module.exports = function(grunt){
         tasks: ['uglify']
       },
       test: {
-        files: ['test/spec/*.js'],
-        tasks: ['mocha']
+        files: ['test/spec/*.js', 'dist/<%= pkg.name %>.js'],
+        tasks: ['mocha', 'livereload']
       }
     },
     connect: {
@@ -62,6 +62,16 @@ module.exports = function(grunt){
           base: 'examples/',
           hostname: 'localhost',
           port: 9001,
+          middleware: function(connect, options) {
+            return [lrSnippet, folderMount(connect, options.base)];
+          }
+        }
+      },
+      test: {
+        options: {
+          // base: '/',
+          hostname: 'localhost',
+          port: 9005,
           middleware: function(connect, options) {
             return [lrSnippet, folderMount(connect, options.base)];
           }

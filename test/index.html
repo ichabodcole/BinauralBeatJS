@@ -13,14 +13,21 @@
     mocha.setup('bdd');
     var expect = chai.expect;
   </script>
+  <script src="../node_modules/allen/allen.js"></script>
+  <script src="../dist/binauralbeat.js"></script>
 
-  <script src="../dist/jslib.js"></script>
   <script src="spec/test.js"></script>
-
   <script>
-    if (navigator.userAgent.indexOf('PhantomJS') < 0) {
-      mocha.run();
-    }
+  // Load mock AudioContext if testing in PhantomJS
+  if (navigator.userAgent.indexOf('PhantomJS') >= 0 ) {
+    var s = document.createElement('script');
+    s.src = '../node_modules/allen/test/build/mockContext.js';
+    s.onload = function () { mocha.run(); };
+    document.getElementsByTagName('body')[0].appendChild(s);
+  } else {
+    mocha.run();
+  }
   </script>
+
 </body>
 </html>
