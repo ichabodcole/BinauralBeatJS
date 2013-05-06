@@ -41,3 +41,5 @@ $("#sldr-volume").change (e)->
     bBeat.setVolume(volume/100)
 
 $(".slider").trigger("change")
+
+$('.btn').click();

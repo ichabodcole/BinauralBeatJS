@@ -57,4 +57,6 @@
 
   $(".slider").trigger("change");
 
+  $('.btn').click();
+
 }).call(this);

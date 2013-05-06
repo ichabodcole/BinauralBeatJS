@@ -45,7 +45,7 @@ module.exports = function(grunt){
       },
       compile: {
         files: ['**/*.coffee'],
-        tasks: ['coffee']
+        tasks: ['coffee', 'mocha']
       },
       min: {
         files: ['dist/<%= pkg.name %>.js'],

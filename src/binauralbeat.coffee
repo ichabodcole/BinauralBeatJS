@@ -34,7 +34,7 @@ class window.BinauralBeat
 		@masterGain = @context.createGain()
 		# @compressor = @context.createDynamicsCompressor()
 		# @channelMerger = @context.createChannelMerger()
-		# @waveTypes = {sine:0, square:1, sawtooth:2, triangle:3}
+		@waveTypes = {sine:0, square:1, sawtooth:2, triangle:3}
 
 		# @createChannels()
 		# @setWaveType(@waveType)
@@ -95,12 +95,14 @@ class window.BinauralBeat
 		# @rightChannel.frequency.value = @getFreqRight()
 		null
 
-	# setWaveType: (@waveType)->
-	# 	@waveType = @waveTypes[@waveType]
-	# 	@leftChannel.type = @rightChannel.type = @waveType
+	setWaveType: (@waveType)->
+		# @waveTypeNum = @waveTypes[@waveType]
+		# @leftChannel.type = @rightChannel.type = @waveType
 
 	setVolume: (volume)->
-		# @userVolume = volume
+		volume = 0 if volume < 0
+		volume = 1 if volume > 1
+		@userVolume = volume
 		# @setGain(volume)
 		null
 

@@ -36,6 +36,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       this.waveType = waveType != null ? waveType : "sine";
       this.userVolume = 1;
       this.masterGain = this.context.createGain();
+      this.waveTypes = {
+        sine: 0,
+        square: 1,
+        sawtooth: 2,
+        triangle: 3
+      };
     }
 
     BinauralBeat.prototype.getNode = function() {
@@ -53,7 +59,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       return null;
     };
 
+    BinauralBeat.prototype.setWaveType = function(waveType) {
+      this.waveType = waveType;
+    };
+
     BinauralBeat.prototype.setVolume = function(volume) {
+      if (volume < 0) {
+        volume = 0;
+      }
+      if (volume > 1) {
+        volume = 1;
+      }
+      this.userVolume = volume;
       return null;
     };
 
