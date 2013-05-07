@@ -1,13 +1,15 @@
 (function() {
-  var bBeat, bBeatNode, context, started;
+  var bBeat, context, gain, started;
 
   context = new webkitAudioContext();
 
   bBeat = new BinauralBeat(context);
 
-  bBeatNode = bBeat.getNode();
+  gain = context.createGain();
 
-  bBeatNode.connect(context.destination);
+  bBeat.connect(gain);
+
+  gain.connect(context.destination);
 
   started = false;
 
@@ -19,19 +21,19 @@
   });
 
   $("#btn-sine").click(function() {
-    return bBeat.setWaveType("sine");
+    return bBeat.setWaveType(BinauralBeat.SINE);
   });
 
   $("#btn-square").click(function() {
-    return bBeat.setWaveType("square");
+    return bBeat.setWaveType(BinauralBeat.SQUARE);
   });
 
   $("#btn-triangle").click(function() {
-    return bBeat.setWaveType("triangle");
+    return bBeat.setWaveType(BinauralBeat.TRIANGLE);
   });
 
   $("#btn-sawtooth").click(function() {
-    return bBeat.setWaveType("sawtooth");
+    return bBeat.setWaveType(BinauralBeat.SAWTOOTH);
   });
 
   $("#sldr-freq").change(function(e) {
@@ -45,18 +47,17 @@
     var beats;
 
     beats = Number(e.target.value);
-    return bBeat.setBeat(beats);
+    console.log(beats);
+    return bBeat.setBeatFrequency(beats);
   });
 
   $("#sldr-volume").change(function(e) {
     var volume;
 
     volume = Number(e.target.value);
-    return bBeat.setVolume(volume / 100);
+    return gain.gain.value = volume / 100;
   });
 
   $(".slider").trigger("change");
-
-  $('.btn').click();
 
 }).call(this);

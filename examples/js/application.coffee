@@ -1,12 +1,10 @@
 # Binaural Setup
 context = new webkitAudioContext()
-
 bBeat = new BinauralBeat(context)
-#get the ending masterGain node from the BinauralBeat instance.
-bBeatNode = bBeat.getNode()
+gain = context.createGain();
 
-bBeatNode.connect(context.destination)
-
+bBeat.connect(gain)
+gain.connect(context.destination);
 # Interface Code
 started = false
 $(".btn").click (e)->
@@ -16,16 +14,16 @@ $(".btn").click (e)->
 
 # Wave Type Buttons
 $("#btn-sine").click ->
-    bBeat.setWaveType("sine")
+    bBeat.setWaveType(BinauralBeat.SINE)
 
 $("#btn-square").click ->
-    bBeat.setWaveType("square")
+    bBeat.setWaveType(BinauralBeat.SQUARE)
 
 $("#btn-triangle").click ->
-    bBeat.setWaveType("triangle")
+    bBeat.setWaveType(BinauralBeat.TRIANGLE)
 
 $("#btn-sawtooth").click ->
-    bBeat.setWaveType("sawtooth")
+    bBeat.setWaveType(BinauralBeat.SAWTOOTH)
 
 # Slider Inputs
 $("#sldr-freq").change (e)->
@@ -34,12 +32,13 @@ $("#sldr-freq").change (e)->
 
 $("#sldr-beat").change (e)->
     beats = Number(e.target.value)
-    bBeat.setBeat(beats)
+    console.log beats
+    bBeat.setBeatFrequency(beats)
 
 $("#sldr-volume").change (e)->
     volume = Number(e.target.value)
-    bBeat.setVolume(volume/100)
+    gain.gain.value = volume / 100
 
 $(".slider").trigger("change")
 
-$('.btn').click();
+# $('.btn').click();

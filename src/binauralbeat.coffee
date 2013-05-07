@@ -1,6 +1,6 @@
 ###
 BinauralBeatJS
-v1.0
+v0.2.0
 Author: Cole Reed
 ichabodcole (AT) gmail.com
 
@@ -26,110 +26,94 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ###
 class window.BinauralBeat
-	constructor: (@context, @freq=440, @beat=5, @waveType="sine")->
-		@userVolume = 1
-		# @leftChannel  = null
-		# @rightChannel = null
-		# @defaultfadeLength = 2
-		@masterGain = @context.createGain()
-		# @compressor = @context.createDynamicsCompressor()
-		# @channelMerger = @context.createChannelMerger()
-		@waveTypes = {sine:0, square:1, sawtooth:2, triangle:3}
 
-		# @createChannels()
-		# @setWaveType(@waveType)
-		# @mergeChannels()
-		# return @channelMerger.connect(@masterGain)
+	# WaveType connstants
+	@SINE = 0
+	@SQUARE = 1
+	@SAWTOOTH = 2
+	@TRIANGLE = 3
 
-	# createChannels: ->
-	# 	@leftChannel  = @createChannel(@getFreqLeft())
-	# 	@rightChannel = @createChannel(@getFreqRight())
-	# 	null
+	constructor: (ctx, options)->
+		@input  = ctx.createGain()
+		@output = ctx.createGain()
 
-	# createChannel: (freq)->
-	# 	osc = @context.createOscillator()
-	# 	osc.frequency.value = freq
-	# 	return osc
+		# Defaults
+		options 	 		 = options ? {}
+		@frequency 		 = options.frequency ? 440
+		@beatFrequency = options.beats ? 5
+		@waveType  		 = options.waveType ? 0
+		compressNodes  = options.compressNodes ? false
 
-	# mergeChannels: ->
-	# 	@leftChannel.connect(@channelMerger, 0, 0)
-	# 	@rightChannel.connect(@channelMerger, 0, 1)
-	# 	null
+		# setup functions
+		@createInternalNodes(ctx)
+		@routeNodes(compressNodes)
+		@setFrequency(@frequency)
+		@setWaveType(@waveType)
 
-	# getFreqLeft: ->
-	# 	freq = @freq - @getBeatSplit()
-	# 	return freq
+	createInternalNodes: (ctx)->
+		@leftChannel   = ctx.createOscillator()
+		@rightChannel  = ctx.createOscillator()
+		@channelMerger = ctx.createChannelMerger()
+		@compressor		 = ctx.createDynamicsCompressor();
 
-	# getFreqRight: ->
-	# 	freq = @freq + @getBeatSplit()
-	# 	return freq
+	# Setup Audio Routing
+	routeNodes: (compressNodes)->
+		@leftChannel.connect(@channelMerger, 0, 0)
+		@rightChannel.connect(@channelMerger, 0, 1)
+		# This can be helpful when passing other audio signals through this node
+		if compressNodes
+			@input.connect(@compressor)
+			@channelMerger.connect(@compressor)
+			@compressor.connect(@output)
+		else
+			@input.connect(@output)
+			@channelMerger.connect(@output)
 
-	# getBeatSplit: ->
-	# 	return @beat / 2
+	getChannelFrequency: (channelNum)->
+		frequencyOffset = @beatFrequency / 2
+		if channelNum == 0
+			channelFrequency = @frequency - frequencyOffset
+		else
+			channelFrequency = @frequency + frequencyOffset
+		return channelFrequency
 
-	# setGain: (gain)->
-	# 	@masterGain.gain.value = gain
-	# 	null
+	createLeftChannel: ->
+		frequencyLeft = @frequency - @getBeatSplit()
+		@leftChannel = ctx.createOscillator()
 
-	# start: ->
-	# 	@leftChannel.start(0)
-	# 	@rightChannel.start(0)
-	# 	null
+	createRightChannel: ->
+		frequencyRight = @frequency + @getBeatSplit()
+		@rightChannel = ctx.createOscillator()
 
-	# stop: ->
-	# 	@leftChannel.stop(0)
-	# 	@rightChannel.stop(0)
-	# 	null
+	setFrequency: (freq)->
+		@frequency = freq
+		@leftChannel.frequency.value  = @getChannelFrequency(0)
+		@rightChannel.frequency.value = @getChannelFrequency(1)
 
-	# #Public Methods
-	getNode: ->
-		return @masterGain
-		null
+	setBeatFrequency: (beatFreq)->
+		@beatFrequency = beatFreq
+		@setFrequency(@frequency)
 
-	setBeat: (@beat)->
-		# @setFrequency(@freq)
-		null
+	setWaveType: (waveType)->
+		@waveType = waveType
+		@leftChannel.type = @rightChannel.type = @waveType
 
-	setFrequency: (@freq)->
-		# @leftChannel.frequency.value = @getFreqLeft()
-		# @rightChannel.frequency.value = @getFreqRight()
-		null
+	start: (startTime)->
+		startTime = startTime ? 0
+		@leftChannel.start(startTime)
+		@rightChannel.start(startTime)
 
-	setWaveType: (@waveType)->
-		# @waveTypeNum = @waveTypes[@waveType]
-		# @leftChannel.type = @rightChannel.type = @waveType
+	stop: (stopTime)->
+		stopTime = stopTime ? 0
+		@leftChannel.stop(stopTime)
+		@rightChannel.stop(stopTime)
 
-	setVolume: (volume)->
-		volume = 0 if volume < 0
-		volume = 1 if volume > 1
-		@userVolume = volume
-		# @setGain(volume)
-		null
+	setWaveTable: (waveTable)->
+		@leftChannel.setWaveTable(waveTable)
+		@rightChannel.setWaveTable(waveTable)
 
-	# mute: (bool)->
-	# 	@setGain(0)
-	# 	null
+	connect: (dest)->
+		this.output.connect(if dest.input then dest.input else dest)
 
-	# unmute: ->
-	# 	@setGain(@userVolume)
-	# 	null
-
-	# fadeTo: (value, fadeLength)->
-	# 	fadeLength = fadeLength || @defaultfadeLength
-	# 	currentTime = @context.currentTime
-	# 	#time the fade should complete
-	# 	fadeTime = currentTime + fadeLength
-	# 	#set the start time
-	# 	@masterGain.gain.setValueAtTime(@userVolume, currentTime)
-	# 	@masterGain.gain.linearRampToValueAtTime(value, fadeTime)
-
-	# fadeOut: (fadeLength)->
-	# 	fadeLength = fadeLength || @defaultfadeLength
-	# 	@fadeTo(0, fadeLength)
-
-	# fadeIn: (fadeLength)->
-	# 	fadeLength = fadeLength || @defaultfadeLength
-	# 	@fadeTo(@userVolume, fadeLength)
-
-	# end: ->
-	# 	@stop()
+	disconnect: ->
+		this.output.disconnect();
