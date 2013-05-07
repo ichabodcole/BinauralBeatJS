@@ -59,7 +59,9 @@ describe('BinauralBeat', function () {
     }),
     it ('should take a WaveTable argument', function () {
       var _self = this;
-      var waveTable = ctx.createWaveTable();
+      var real = new Float32Array(4096);
+      var imag = new Float32Array(4096);
+      var waveTable = ctx.createWaveTable(real, imag);
       expect(setWaveTable).to.not.throw();
       function setWaveTable () {
         _self.bBeat.setWaveTable(waveTable);
