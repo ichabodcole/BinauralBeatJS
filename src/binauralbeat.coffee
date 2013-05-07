@@ -45,19 +45,19 @@ class window.BinauralBeat
 		compressNodes  = options.compressNodes ? false
 
 		# setup functions
-		@createInternalNodes(ctx)
-		@routeNodes(compressNodes)
+		@_createInternalNodes(ctx)
+		@_routeNodes(compressNodes)
 		@setFrequency(@frequency)
 		@setWaveType(@waveType)
 
-	createInternalNodes: (ctx)->
+	_createInternalNodes: (ctx)->
 		@leftChannel   = ctx.createOscillator()
 		@rightChannel  = ctx.createOscillator()
 		@channelMerger = ctx.createChannelMerger()
 		@compressor		 = ctx.createDynamicsCompressor();
 
 	# Setup Audio Routing
-	routeNodes: (compressNodes)->
+	_routeNodes: (compressNodes)->
 		@leftChannel.connect(@channelMerger, 0, 0)
 		@rightChannel.connect(@channelMerger, 0, 1)
 		# This can be helpful when passing other audio signals through this node
@@ -69,7 +69,7 @@ class window.BinauralBeat
 			@input.connect(@output)
 			@channelMerger.connect(@output)
 
-	getChannelFrequency: (channelNum)->
+	_getChannelFrequency: (channelNum)->
 		frequencyOffset = @beatFrequency / 2
 		if channelNum == 0
 			channelFrequency = @frequency - frequencyOffset
@@ -77,18 +77,10 @@ class window.BinauralBeat
 			channelFrequency = @frequency + frequencyOffset
 		return channelFrequency
 
-	createLeftChannel: ->
-		frequencyLeft = @frequency - @getBeatSplit()
-		@leftChannel = ctx.createOscillator()
-
-	createRightChannel: ->
-		frequencyRight = @frequency + @getBeatSplit()
-		@rightChannel = ctx.createOscillator()
-
 	setFrequency: (freq)->
 		@frequency = freq
-		@leftChannel.frequency.value  = @getChannelFrequency(0)
-		@rightChannel.frequency.value = @getChannelFrequency(1)
+		@leftChannel.frequency.value  = @_getChannelFrequency(0)
+		@rightChannel.frequency.value = @_getChannelFrequency(1)
 
 	setBeatFrequency: (beatFreq)->
 		@beatFrequency = beatFreq
@@ -97,6 +89,10 @@ class window.BinauralBeat
 	setWaveType: (waveType)->
 		@waveType = waveType
 		@leftChannel.type = @rightChannel.type = @waveType
+
+	setWaveTable: (waveTable)->
+		@leftChannel.setWaveTable(waveTable)
+		@rightChannel.setWaveTable(waveTable)
 
 	start: (startTime)->
 		startTime = startTime ? 0
@@ -107,10 +103,6 @@ class window.BinauralBeat
 		stopTime = stopTime ? 0
 		@leftChannel.stop(stopTime)
 		@rightChannel.stop(stopTime)
-
-	setWaveTable: (waveTable)->
-		@leftChannel.setWaveTable(waveTable)
-		@rightChannel.setWaveTable(waveTable)
 
 	connect: (dest)->
 		this.output.connect(if dest.input then dest.input else dest)

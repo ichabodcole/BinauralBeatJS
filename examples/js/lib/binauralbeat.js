@@ -47,20 +47,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       this.beatFrequency = (_ref1 = options.beats) != null ? _ref1 : 5;
       this.waveType = (_ref2 = options.waveType) != null ? _ref2 : 0;
       compressNodes = (_ref3 = options.compressNodes) != null ? _ref3 : false;
-      this.createInternalNodes(ctx);
-      this.routeNodes(compressNodes);
+      this._createInternalNodes(ctx);
+      this._routeNodes(compressNodes);
       this.setFrequency(this.frequency);
       this.setWaveType(this.waveType);
     }
 
-    BinauralBeat.prototype.createInternalNodes = function(ctx) {
+    BinauralBeat.prototype._createInternalNodes = function(ctx) {
       this.leftChannel = ctx.createOscillator();
       this.rightChannel = ctx.createOscillator();
       this.channelMerger = ctx.createChannelMerger();
       return this.compressor = ctx.createDynamicsCompressor();
     };
 
-    BinauralBeat.prototype.routeNodes = function(compressNodes) {
+    BinauralBeat.prototype._routeNodes = function(compressNodes) {
       this.leftChannel.connect(this.channelMerger, 0, 0);
       this.rightChannel.connect(this.channelMerger, 0, 1);
       if (compressNodes) {
@@ -73,7 +73,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
     };
 
-    BinauralBeat.prototype.getChannelFrequency = function(channelNum) {
+    BinauralBeat.prototype._getChannelFrequency = function(channelNum) {
       var channelFrequency, frequencyOffset;
 
       frequencyOffset = this.beatFrequency / 2;
@@ -85,24 +85,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       return channelFrequency;
     };
 
-    BinauralBeat.prototype.createLeftChannel = function() {
-      var frequencyLeft;
-
-      frequencyLeft = this.frequency - this.getBeatSplit();
-      return this.leftChannel = ctx.createOscillator();
-    };
-
-    BinauralBeat.prototype.createRightChannel = function() {
-      var frequencyRight;
-
-      frequencyRight = this.frequency + this.getBeatSplit();
-      return this.rightChannel = ctx.createOscillator();
-    };
-
     BinauralBeat.prototype.setFrequency = function(freq) {
       this.frequency = freq;
-      this.leftChannel.frequency.value = this.getChannelFrequency(0);
-      return this.rightChannel.frequency.value = this.getChannelFrequency(1);
+      this.leftChannel.frequency.value = this._getChannelFrequency(0);
+      return this.rightChannel.frequency.value = this._getChannelFrequency(1);
     };
 
     BinauralBeat.prototype.setBeatFrequency = function(beatFreq) {
@@ -115,6 +101,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       return this.leftChannel.type = this.rightChannel.type = this.waveType;
     };
 
+    BinauralBeat.prototype.setWaveTable = function(waveTable) {
+      this.leftChannel.setWaveTable(waveTable);
+      return this.rightChannel.setWaveTable(waveTable);
+    };
+
     BinauralBeat.prototype.start = function(startTime) {
       startTime = startTime != null ? startTime : 0;
       this.leftChannel.start(startTime);
@@ -125,11 +116,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       stopTime = stopTime != null ? stopTime : 0;
       this.leftChannel.stop(stopTime);
       return this.rightChannel.stop(stopTime);
-    };
-
-    BinauralBeat.prototype.setWaveTable = function(waveTable) {
-      this.leftChannel.setWaveTable(waveTable);
-      return this.rightChannel.setWaveTable(waveTable);
     };
 
     BinauralBeat.prototype.connect = function(dest) {
