@@ -38,7 +38,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     BinauralBeat.TRIANGLE = 3;
 
     function BinauralBeat(ctx, options) {
-      var compressNodes, _ref, _ref1, _ref2, _ref3;
+      var _ref, _ref1, _ref2, _ref3;
 
       this.input = ctx.createGain();
       this.output = ctx.createGain();
@@ -46,9 +46,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       this.frequency = (_ref = options.frequency) != null ? _ref : 440;
       this.beatFrequency = (_ref1 = options.beats) != null ? _ref1 : 5;
       this.waveType = (_ref2 = options.waveType) != null ? _ref2 : 0;
-      compressNodes = (_ref3 = options.compressNodes) != null ? _ref3 : false;
+      this.compressNodes = (_ref3 = options.compressNodes) != null ? _ref3 : false;
       this._createInternalNodes(ctx);
-      this._routeNodes(compressNodes);
+      this._routeNodes();
       this.setFrequency(this.frequency);
       this.setWaveType(this.waveType);
     }
@@ -60,10 +60,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       return this.compressor = ctx.createDynamicsCompressor();
     };
 
-    BinauralBeat.prototype._routeNodes = function(compressNodes) {
+    BinauralBeat.prototype._routeNodes = function() {
       this.leftChannel.connect(this.channelMerger, 0, 0);
       this.rightChannel.connect(this.channelMerger, 0, 1);
-      if (compressNodes) {
+      if (this.compressNodes) {
         this.input.connect(this.compressor);
         this.channelMerger.connect(this.compressor);
         return this.compressor.connect(this.output);

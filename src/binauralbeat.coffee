@@ -42,11 +42,11 @@ class window.BinauralBeat
 		@frequency 		 = options.frequency ? 440
 		@beatFrequency = options.beats ? 5
 		@waveType  		 = options.waveType ? 0
-		compressNodes  = options.compressNodes ? false
+		@compressNodes  = options.compressNodes ? false
 
 		# setup functions
 		@_createInternalNodes(ctx)
-		@_routeNodes(compressNodes)
+		@_routeNodes()
 		@setFrequency(@frequency)
 		@setWaveType(@waveType)
 
@@ -57,11 +57,11 @@ class window.BinauralBeat
 		@compressor		 = ctx.createDynamicsCompressor();
 
 	# Setup Audio Routing
-	_routeNodes: (compressNodes)->
+	_routeNodes: ()->
 		@leftChannel.connect(@channelMerger, 0, 0)
 		@rightChannel.connect(@channelMerger, 0, 1)
 		# This can be helpful when passing other audio signals through this node
-		if compressNodes
+		if @compressNodes
 			@input.connect(@compressor)
 			@channelMerger.connect(@compressor)
 			@compressor.connect(@output)

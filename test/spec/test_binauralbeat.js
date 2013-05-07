@@ -24,14 +24,17 @@ describe('BinauralBeat', function () {
     it ('should have an output property which is an AudioNode', function () {
       expect(allen.isAudioNode(this.bBeat.output)).to.equal(true);
     }),
-    it ('should have a frequency property set to 440', function () {
+    it ('should have a frequency property with default set to 440', function () {
       expect(this.bBeat.frequency).to.equal(440);
     }),
-    it ('should have a beatFrequency property set to 5', function () {
+    it ('should have a beatFrequency property with default set to 5', function () {
       expect(this.bBeat.beatFrequency).to.equal(5);
     }),
-    it ('should have a waveType property set to 0', function () {
+    it ('should have a waveType property with default set to 0', function () {
       expect(this.bBeat.waveType).to.equal(0);
+    }),
+    it ('should have a compressNodes property with default set to false', function () {
+      expect(this.bBeat.compressNodes).to.equal(false);
     });
   }),
 
