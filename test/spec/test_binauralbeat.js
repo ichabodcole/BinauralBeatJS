@@ -23,6 +23,15 @@ describe('BinauralBeat', function () {
     }),
     it ('should have an output property which is an AudioNode', function () {
       expect(allen.isAudioNode(this.bBeat.output)).to.equal(true);
+    }),
+    it ('should have a frequency property set to 440', function () {
+      expect(this.bBeat.frequency).to.equal(440);
+    }),
+    it ('should have a beatFrequency property set to 5', function () {
+      expect(this.bBeat.beatFrequency).to.equal(5);
+    }),
+    it ('should have a waveType property set to 0', function () {
+      expect(this.bBeat.waveType).to.equal(0);
     });
   }),
 
@@ -62,9 +71,6 @@ describe('BinauralBeat', function () {
     it ('should have a stop method', function () {
       expect(this.bBeat).to.respondTo('stop');
     });
-    // it ('should have a default of 0', function (){
-
-    // })
   }),
 
   describe('start', function () {
@@ -93,7 +99,7 @@ describe('BinauralBeat', function () {
   describe('disconnect', function () {
     it ('should have a method disconnect', function () {
       var _self = this;
-      // this.bBeat.connect(gainNode);
+      this.bBeat.connect(gainNode);
       expect(disconnect).to.not.throw();
       function disconnect (){
         _self.bBeat.disconnect();
