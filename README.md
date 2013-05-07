@@ -5,8 +5,20 @@ BinauralJS
 More on binaural beats <a target="_blank" href="http://en.wikipedia.org/wiki/Binaural_beats">Here</a></p>
 
 ### Basic Usage
-    context = new webkitAudioContext()
-    bn1 = new BinauralBeat(context, frequency, beatRate, [type="sine", "square", "sawtooth", "triangle"])
-    bn1.setVolume(0.5)
-    bn1Node = bn1.getNode()
-    bn1Node.connect(context.destination)
+    // Create a new AudioContext to connect to
+    var context = new webkitAudioContext()
+
+    // Create a BinauralBeat instance, options is a hash with the below defaults if nothing is provided.
+    var bBeat = new BinauralBeat(context, options{frequency: 440, beatFrequency: 5, waveType: 0, compressNodes: false});
+    
+    // Create a new gain node to control volume
+    var volume = context.createGain();
+
+    // Connect to the BinauralBeat node to the gain node
+    bBeat.connect(volume)
+    
+    // Connect the gain node to the context output.
+    volume.connect(context.destination)
+
+    // Control volume like this
+    volume.gain.value = .8
