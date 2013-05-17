@@ -77,6 +77,12 @@ class window.BinauralBeat
 			channelFrequency = @frequency + frequencyOffset
 		return channelFrequency
 
+	getChannel: (channel)->
+		if channel == 0
+			@leftChannel
+		else if channel == 1
+			@rightChannel
+
 	setFrequency: (freq)->
 		@frequency = freq
 		@leftChannel.frequency.value  = @_getChannelFrequency(0)

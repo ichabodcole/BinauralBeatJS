@@ -24,7 +24,9 @@ module.exports = function(grunt){
       examples: {
         files: {
           'examples/js/lib/<%= pkg.name %>.js': 'src/<%= pkg.name %>.coffee',
-          'examples/js/application.js': 'examples/js/application.coffee'
+          'examples/js/application.js': 'examples/js/application.coffee',
+          'examples/js/audio_visualizer.js': 'examples/js/audio_visualizer.coffee',
+          'examples/js/renderer.js': 'examples/js/renderer.coffee'
         }
       }
     },
@@ -87,9 +89,5 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-mocha');
 
-  // grunt.loadTasks('node_modules/grunt-mocha/tasks/');
-
   grunt.registerTask('default', ['coffee', 'uglify', 'livereload-start', 'connect', 'regarde', 'mocha']);
-  // grunt.registerTask('default', ['plugin']);
-
 };

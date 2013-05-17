@@ -38,6 +38,16 @@ describe('BinauralBeat', function () {
     });
   }),
 
+  describe('getChannel', function () {
+    it('should have a method getChannel', function () {
+      expect(this.bBeat).to.respondTo('getChannel');
+    }),
+    it('should return and audio node', function (){
+      var leftChannel = this.bBeat.getChannel(0);
+      expect(allen.isAudioNode(leftChannel)).to.equal(true);
+    });
+  });
+
   describe('setFrequency', function () {
     it ('should have a method setFrequency', function () {
       expect(this.bBeat).to.respondTo('setFrequency');
