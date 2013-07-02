@@ -1,7 +1,7 @@
 {
   "name": "binauralbeat",
   "version": "0.1.1",
-  "description": "Template for JavaScrip libraries",
+  "description": "Library for creating binaural beats on using the Web Audio API.",
   "main": "dist/binauralbeat.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
