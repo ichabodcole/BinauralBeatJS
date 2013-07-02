@@ -1,33 +1,30 @@
 {
   "name": "binauralbeat",
-  "version": "0.2.0",
-  "description": "Library for generating binaural beats with the Web Audio API",
-  "homepage": "https://github.com/ichabodcole/BinauralJS",
+  "version": "0.1.1",
+  "description": "Template for JavaScrip libraries",
   "main": "dist/binauralbeat.js",
   "scripts": {
-    "test": "grunt mocha"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "",
   "keywords": [
-    "audio",
-    "webkit-audio",
-    "binaural",
-    "meditation"
+    "fun"
   ],
-  "author": "Cole Reed <info@auralgrey.com>",
+  "author": "Cole",
   "license": "MIT",
   "devDependencies": {
     "grunt": "~0.4.1",
-    "grunt-contrib-livereload": "~0.1.2",
-    "grunt-contrib-watch": "~0.3.1",
+    "grunt-contrib-watch": "~0.4.4",
     "grunt-contrib-connect": "~0.3.0",
-    "grunt-regarde": "~0.1.1",
+    "connect-livereload": "~0.2.0",
     "grunt-contrib-uglify": "~0.2.0",
     "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-sass": "~0.3.0",
     "grunt-mocha": "~0.3.1",
     "chai": "~1.6.0",
     "mocha": "~1.9.0",
     "growl": "~1.7.0",
+    "bower": "~0.9.2",
     "allen": "~0.1.7"
   }
 }

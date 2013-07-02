@@ -28,7 +28,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 (function() {
-  window.BinauralBeat = (function() {
+  var BinauralBeat;
+
+  BinauralBeat = (function() {
     BinauralBeat.SINE = 0;
 
     BinauralBeat.SQUARE = 1;
@@ -39,7 +41,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     function BinauralBeat(ctx, options) {
       var _ref, _ref1, _ref2, _ref3;
-
       this.input = ctx.createGain();
       this.output = ctx.createGain();
       options = options != null ? options : {};
@@ -75,7 +76,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     BinauralBeat.prototype._getChannelFrequency = function(channelNum) {
       var channelFrequency, frequencyOffset;
-
       frequencyOffset = this.beatFrequency / 2;
       if (channelNum === 0) {
         channelFrequency = this.frequency - frequencyOffset;
@@ -137,5 +137,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     return BinauralBeat;
 
   })();
+
+  if (typeof define === 'function' && define.amd) {
+    define(function() {
+      return BinauralBeat;
+    });
+  } else {
+    if (typeof window === "object" && typeof window.document === "object") {
+      window.BinauralBeat = BinauralBeat;
+    }
+  }
 
 }).call(this);

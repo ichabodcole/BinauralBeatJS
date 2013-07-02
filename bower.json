@@ -1,0 +1,13 @@
+{
+  "name": "frontend-library-template",
+  "version": "0.0.1",
+  "main": "dist/binauralbeat.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "devDependencies": {
+    // "requirejs": "~2.1.6"
+  }
+}

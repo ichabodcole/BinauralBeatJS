@@ -25,7 +25,7 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ###
-class window.BinauralBeat
+class BinauralBeat
 
 	# WaveType connstants
 	@SINE = 0
@@ -115,3 +115,11 @@ class window.BinauralBeat
 
 	disconnect: ->
 		this.output.disconnect();
+
+# Setup AMD or global object
+if typeof define == 'function' && define.amd
+  define ->
+    return BinauralBeat
+else
+  if typeof window == "object" && typeof window.document == "object"
+    window.BinauralBeat = BinauralBeat

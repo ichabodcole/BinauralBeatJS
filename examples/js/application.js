@@ -76,7 +76,6 @@
 
   $("#sldr-freq").change(function(e) {
     var freq;
-
     freq = Number(e.target.value);
     bBeat.setFrequency(freq);
     return renderer.draw();
@@ -84,7 +83,6 @@
 
   $("#sldr-beat").change(function(e) {
     var beats;
-
     beats = Number(e.target.value);
     console.log(beats);
     bBeat.setBeatFrequency(beats);
@@ -93,7 +91,6 @@
 
   $("#sldr-volume").change(function(e) {
     var volume;
-
     volume = Number(e.target.value);
     return gain.gain.value = volume / 100;
   });
