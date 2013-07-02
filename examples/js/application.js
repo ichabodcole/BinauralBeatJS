@@ -23,6 +23,32 @@
 
   rightChannel.connect(analyserRight);
 
+  run = function() {
+    return setTimeout(function() {
+      return renderer.draw();
+    }, 50);
+  };
+
+  canvas_width = 800;
+
+  canvas_height = 300;
+
+  scale_left = 0.5;
+
+  scale_right = 0.5;
+
+  points = 1024;
+
+  visualizerLeft = new AudioVisualizer(analyserLeft, 'red', points, scale_left);
+
+  visualizerRight = new AudioVisualizer(analyserRight, 'blue', points, scale_right);
+
+  renderer = new Renderer(canvas_width, canvas_height, [visualizerLeft, visualizerRight]);
+
+  run();
+
+  visualizerLeft.logData();
+
   started = false;
 
   $(".btn").click(function(e) {
@@ -52,7 +78,8 @@
     var freq;
 
     freq = Number(e.target.value);
-    return bBeat.setFrequency(freq);
+    bBeat.setFrequency(freq);
+    return renderer.draw();
   });
 
   $("#sldr-beat").change(function(e) {
@@ -60,7 +87,8 @@
 
     beats = Number(e.target.value);
     console.log(beats);
-    return bBeat.setBeatFrequency(beats);
+    bBeat.setBeatFrequency(beats);
+    return renderer.draw();
   });
 
   $("#sldr-volume").change(function(e) {
@@ -73,32 +101,5 @@
   $(".slider").trigger("change");
 
   $("#btn-sine").click();
-
-  run = function() {
-    return setTimeout(function() {
-      requestAnimationFrame(run);
-      return renderer.draw();
-    }, 50);
-  };
-
-  canvas_width = 800;
-
-  canvas_height = 300;
-
-  scale_left = 0.5;
-
-  scale_right = 0.5;
-
-  points = 512;
-
-  visualizerLeft = new AudioVisualizer(analyserLeft, 'red', points, scale_left);
-
-  visualizerRight = new AudioVisualizer(analyserRight, 'blue', points, scale_right);
-
-  renderer = new Renderer(canvas_width, canvas_height, [visualizerLeft, visualizerRight]);
-
-  run();
-
-  visualizerLeft.logData();
 
 }).call(this);

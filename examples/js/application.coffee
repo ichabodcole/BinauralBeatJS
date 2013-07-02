@@ -15,6 +15,22 @@ gain.connect(context.destination)
 leftChannel.connect(analyserLeft)
 rightChannel.connect(analyserRight)
 
+run = ->
+    setTimeout ->
+            # requestAnimationFrame(run)
+            renderer.draw()
+        ,50
+
+canvas_width  = 800
+canvas_height = 300
+scale_left  = 0.5
+scale_right = 0.5
+points = 1024
+visualizerLeft  = new AudioVisualizer(analyserLeft, 'red', points, scale_left)
+visualizerRight = new AudioVisualizer(analyserRight, 'blue', points, scale_right)
+renderer        = new Renderer(canvas_width, canvas_height, [visualizerLeft, visualizerRight])
+run()
+visualizerLeft.logData()
 # analyser.connect(context.destination)
 # osc.start(0)
 # Interface Code
@@ -41,11 +57,13 @@ $("#btn-sawtooth").click ->
 $("#sldr-freq").change (e)->
     freq = Number(e.target.value)
     bBeat.setFrequency(freq)
+    renderer.draw()
 
 $("#sldr-beat").change (e)->
     beats = Number(e.target.value)
     console.log beats
     bBeat.setBeatFrequency(beats)
+    renderer.draw()
 
 $("#sldr-volume").change (e)->
     volume = Number(e.target.value)
@@ -56,19 +74,4 @@ $(".slider").trigger("change")
 # $('.btn').click();
 $("#btn-sine").click();
 
-run = ->
-    setTimeout ->
-            requestAnimationFrame(run)
-            renderer.draw()
-        ,50
 
-canvas_width  = 800
-canvas_height = 300
-scale_left  = 0.5
-scale_right = 0.5
-points = 512
-visualizerLeft  = new AudioVisualizer(analyserLeft, 'red', points, scale_left)
-visualizerRight = new AudioVisualizer(analyserRight, 'blue', points, scale_right)
-renderer        = new Renderer(canvas_width, canvas_height, [visualizerLeft, visualizerRight])
-run()
-visualizerLeft.logData()

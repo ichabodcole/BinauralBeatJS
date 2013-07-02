@@ -59,7 +59,7 @@
 
       data = this.getData(this.points);
       offset = 10;
-      this.drawLines(context, data, offset);
+      this.drawBoxes(context, data, offset);
       return this.last_data = data;
     };
 

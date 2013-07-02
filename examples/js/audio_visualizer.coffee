@@ -50,7 +50,7 @@ class window.AudioVisualizer
     # bars = 30
     offset = 10
     # @drawBoxes(context, data, offset)
-    @drawLines(context, data, offset)
+    @drawBoxes(context, data, offset)
 
     @last_data = data
   # drawDashedLine:(context, startX, startY, endX, endY, dashSize, gapSize)->
