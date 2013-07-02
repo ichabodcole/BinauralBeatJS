@@ -72,6 +72,6 @@ $("#sldr-volume").change (e)->
 $(".slider").trigger("change")
 
 # $('.btn').click();
-$("#btn-sine").click();
+# $("#btn-sine").click();
 
 

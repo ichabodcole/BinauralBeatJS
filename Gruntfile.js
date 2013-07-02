@@ -12,7 +12,8 @@ module.exports = function(grunt){
       all: ['test/**/*.html'],
       options: {
         reporter: 'Nyan',
-        run: true
+        log: true,
+        run: false
       }
     },
     sass: {

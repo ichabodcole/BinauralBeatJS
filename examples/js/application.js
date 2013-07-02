@@ -97,6 +97,4 @@
 
   $(".slider").trigger("change");
 
-  $("#btn-sine").click();
-
 }).call(this);
