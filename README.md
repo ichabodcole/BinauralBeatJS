@@ -25,3 +25,5 @@ More on binaural beats <a target="_blank" href="http://en.wikipedia.org/wiki/Bin
 
     // Finally
     bBeat.start()
+
+In addition to standard script linking, NoiseGen is AMD compliant and works great with requirejs.
