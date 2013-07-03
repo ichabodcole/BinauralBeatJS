@@ -1,5 +1,5 @@
 {
-  "name": "binauralbeat",
+  "name": "binauralbeat.js",
   "version": "0.1.1",
   "description": "Library for creating binaural beats using the Web Audio API.",
   "main": "dist/binauralbeat.js",
