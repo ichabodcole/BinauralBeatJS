@@ -24,11 +24,11 @@ describe('BinauralBeat', function () {
     it ('should have an output property which is an AudioNode', function () {
       expect(allen.isAudioNode(this.bBeat.output)).to.equal(true);
     }),
-    it ('should have a frequency property with default set to 440', function () {
-      expect(this.bBeat.frequency).to.equal(440);
+    it ('should have a pitch property with default set to 440', function () {
+      expect(this.bBeat.pitch).to.equal(440);
     }),
-    it ('should have a beatFrequency property with default set to 5', function () {
-      expect(this.bBeat.beatFrequency).to.equal(5);
+    it ('should have a beatRate property with default set to 5', function () {
+      expect(this.bBeat.beatRate).to.equal(5);
     }),
     it ('should have a waveType property with default set to 0', function () {
       expect(this.bBeat.waveType).to.equal(0);
@@ -38,31 +38,36 @@ describe('BinauralBeat', function () {
     });
   }),
 
-  describe('getChannel', function () {
-    it('should have a method getChannel', function () {
-      expect(this.bBeat).to.respondTo('getChannel');
-    }),
-    it('should return and audio node', function (){
-      var leftChannel = this.bBeat.getChannel(0);
-      expect(allen.isAudioNode(leftChannel)).to.equal(true);
+  describe('setPitch', function () {
+    it ('should have a method setPitch', function () {
+      expect(this.bBeat).to.respondTo('setPitch');
     });
-  });
 
-  describe('setFrequency', function () {
-    it ('should have a method setFrequency', function () {
-      expect(this.bBeat).to.respondTo('setFrequency');
+    it ('should change the pitch value', function (){
+      this.bBeat.setPitch(500);
+      expect(this.bBeat.pitch).to.equal(500);
     });
   }),
 
-  describe('setBeatFrequency', function () {
-    it ('should have a method setBeatFrequency', function () {
-      expect(this.bBeat).to.respondTo('setBeatFrequency');
+  describe('setBeatRate', function () {
+    it ('should have a method setBeatRate', function () {
+      expect(this.bBeat).to.respondTo('setBeatRate');
+    });
+
+    it ('should change the pitch value', function (){
+      this.bBeat.setBeatRate(16);
+      expect(this.bBeat.beatRate).to.equal(16);
     });
   }),
 
   describe('setWaveType', function () {
     it ('should have a method setWaveType', function () {
       expect(this.bBeat).to.respondTo('setWaveType');
+    });
+
+    it ('should change the waveType value', function (){
+      this.bBeat.setWaveType(BinauralBeat.SQUARE);
+      expect(this.bBeat.waveType).to.equal(BinauralBeat.SQUARE);
     });
   });
 
