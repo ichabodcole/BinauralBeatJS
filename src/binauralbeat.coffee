@@ -1,6 +1,6 @@
 ###
 BinauralBeatJS
-v0.2.0
+v0.2.1
 Author: Cole Reed
 ichabodcole (AT) gmail.com
 
@@ -39,15 +39,15 @@ class BinauralBeat
 
 		# Defaults
 		options 	 		 = options ? {}
-		@frequency 		 = options.frequency ? 440
-		@beatFrequency = options.beats ? 5
+		@pitch 		 		 = options.pitch ? 440
+		@beatRate      = options.beats ? 5
 		@waveType  		 = options.waveType ? 0
-		@compressNodes  = options.compressNodes ? false
+		@compressNodes = options.compressNodes ? false
 
 		# setup functions
 		@_createInternalNodes(ctx)
 		@_routeNodes()
-		@setFrequency(@frequency)
+		@setPitch(@pitch)
 		@setWaveType(@waveType)
 
 	_createInternalNodes: (ctx)->
@@ -70,27 +70,21 @@ class BinauralBeat
 			@channelMerger.connect(@output)
 
 	_getChannelFrequency: (channelNum)->
-		frequencyOffset = @beatFrequency / 2
+		frequencyOffset = @beatRate / 2
 		if channelNum == 0
-			channelFrequency = @frequency - frequencyOffset
+			channelFrequency = @pitch - frequencyOffset
 		else
-			channelFrequency = @frequency + frequencyOffset
+			channelFrequency = @pitch + frequencyOffset
 		return channelFrequency
 
-	getChannel: (channel)->
-		if channel == 0
-			@leftChannel
-		else if channel == 1
-			@rightChannel
-
-	setFrequency: (freq)->
-		@frequency = freq
+	setPitch: (pitchFreq)->
+		@pitch = pitchFreq
 		@leftChannel.frequency.value  = @_getChannelFrequency(0)
 		@rightChannel.frequency.value = @_getChannelFrequency(1)
 
-	setBeatFrequency: (beatFreq)->
-		@beatFrequency = beatFreq
-		@setFrequency(@frequency)
+	setBeatRate: (beatRate)->
+		@beatRate = beatRate
+		@setPitch(@pitch)
 
 	setWaveType: (waveType)->
 		@waveType = waveType

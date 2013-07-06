@@ -1,6 +1,6 @@
 /*
 BinauralBeatJS
-v0.2.0
+v0.2.1
 Author: Cole Reed
 ichabodcole (AT) gmail.com
 
@@ -44,13 +44,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       this.input = ctx.createGain();
       this.output = ctx.createGain();
       options = options != null ? options : {};
-      this.frequency = (_ref = options.frequency) != null ? _ref : 440;
-      this.beatFrequency = (_ref1 = options.beats) != null ? _ref1 : 5;
+      this.pitch = (_ref = options.pitch) != null ? _ref : 440;
+      this.beatRate = (_ref1 = options.beats) != null ? _ref1 : 5;
       this.waveType = (_ref2 = options.waveType) != null ? _ref2 : 0;
       this.compressNodes = (_ref3 = options.compressNodes) != null ? _ref3 : false;
       this._createInternalNodes(ctx);
       this._routeNodes();
-      this.setFrequency(this.frequency);
+      this.setPitch(this.pitch);
       this.setWaveType(this.waveType);
     }
 
@@ -76,32 +76,24 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     BinauralBeat.prototype._getChannelFrequency = function(channelNum) {
       var channelFrequency, frequencyOffset;
-      frequencyOffset = this.beatFrequency / 2;
+      frequencyOffset = this.beatRate / 2;
       if (channelNum === 0) {
-        channelFrequency = this.frequency - frequencyOffset;
+        channelFrequency = this.pitch - frequencyOffset;
       } else {
-        channelFrequency = this.frequency + frequencyOffset;
+        channelFrequency = this.pitch + frequencyOffset;
       }
       return channelFrequency;
     };
 
-    BinauralBeat.prototype.getChannel = function(channel) {
-      if (channel === 0) {
-        return this.leftChannel;
-      } else if (channel === 1) {
-        return this.rightChannel;
-      }
-    };
-
-    BinauralBeat.prototype.setFrequency = function(freq) {
-      this.frequency = freq;
+    BinauralBeat.prototype.setPitch = function(pitchFreq) {
+      this.pitch = pitchFreq;
       this.leftChannel.frequency.value = this._getChannelFrequency(0);
       return this.rightChannel.frequency.value = this._getChannelFrequency(1);
     };
 
-    BinauralBeat.prototype.setBeatFrequency = function(beatFreq) {
-      this.beatFrequency = beatFreq;
-      return this.setFrequency(this.frequency);
+    BinauralBeat.prototype.setBeatRate = function(beatRate) {
+      this.beatRate = beatRate;
+      return this.setPitch(this.pitch);
     };
 
     BinauralBeat.prototype.setWaveType = function(waveType) {
