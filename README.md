@@ -9,7 +9,7 @@ More on binaural beats <a target="_blank" href="http://en.wikipedia.org/wiki/Bin
     var context = new webkitAudioContext()
 
     // Create a BinauralBeat instance, options is a hash with the below defaults if nothing is provided.
-    var bBeat = new BinauralBeat(context, options{frequency: 440, beatFrequency: 5, waveType: 0, compressNodes: false});
+    var bBeat = new BinauralBeat(context, options{pitch: 440, beatRate: 5, waveType: 0, compressNodes: false});
     
     // Create a new gain node to control volume
     var volume = context.createGain();
