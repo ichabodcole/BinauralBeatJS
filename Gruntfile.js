@@ -77,7 +77,7 @@ module.exports = function(grunt){
         tasks: ['uglify']
       },
       test: {
-        files: ['test/spec/*.js'],
+        files: ['test/**/*.js', 'dist/**/*.js'],
         tasks: ['mocha']
       }
     },
