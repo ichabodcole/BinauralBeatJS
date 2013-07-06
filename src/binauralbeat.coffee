@@ -77,6 +77,12 @@ class BinauralBeat
 			channelFrequency = @pitch + frequencyOffset
 		return channelFrequency
 
+	getChannel: (channel)->
+		if channel == 0
+			@leftChannel
+		else if channel == 1
+			@rightChannel
+
 	setPitch: (pitchFreq)->
 		@pitch = pitchFreq
 		@leftChannel.frequency.value  = @_getChannelFrequency(0)

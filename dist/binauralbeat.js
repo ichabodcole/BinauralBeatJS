@@ -85,6 +85,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       return channelFrequency;
     };
 
+    BinauralBeat.prototype.getChannel = function(channel) {
+      if (channel === 0) {
+        return this.leftChannel;
+      } else if (channel === 1) {
+        return this.rightChannel;
+      }
+    };
+
     BinauralBeat.prototype.setPitch = function(pitchFreq) {
       this.pitch = pitchFreq;
       this.leftChannel.frequency.value = this._getChannelFrequency(0);
