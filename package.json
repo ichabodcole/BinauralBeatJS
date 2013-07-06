@@ -1,16 +1,19 @@
 {
-  "name": "binauralbeat.js",
-  "version": "0.1.1",
+  "name": "binauralbeat",
+  "version": "0.2.1",
+  "author": "Cole Reed",
   "description": "Library for creating binaural beats using the Web Audio API.",
   "main": "dist/binauralbeat.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ichabodcole/BinauralBeatJS.git"
+  },
   "keywords": [
-    "fun"
+    "audio", "sound", "meditation", "brain"
   ],
-  "author": "Cole",
   "license": "MIT",
   "devDependencies": {
     "grunt": "~0.4.1",
