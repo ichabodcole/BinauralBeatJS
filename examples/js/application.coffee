@@ -54,15 +54,15 @@ $("#btn-sawtooth").click ->
     bBeat.setWaveType(BinauralBeat.SAWTOOTH)
 
 # Slider Inputs
-$("#sldr-freq").change (e)->
-    freq = Number(e.target.value)
-    bBeat.setFrequency(freq)
+$("#sldr-pitch").change (e)->
+    pitch = Number(e.target.value)
+    bBeat.setPitch(pitch)
     renderer.draw()
 
 $("#sldr-beat").change (e)->
     beats = Number(e.target.value)
     console.log beats
-    bBeat.setBeatFrequency(beats)
+    bBeat.setBeatRate(beats)
     renderer.draw()
 
 $("#sldr-volume").change (e)->

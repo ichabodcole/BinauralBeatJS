@@ -74,10 +74,10 @@
     return bBeat.setWaveType(BinauralBeat.SAWTOOTH);
   });
 
-  $("#sldr-freq").change(function(e) {
-    var freq;
-    freq = Number(e.target.value);
-    bBeat.setFrequency(freq);
+  $("#sldr-pitch").change(function(e) {
+    var pitch;
+    pitch = Number(e.target.value);
+    bBeat.setPitch(pitch);
     return renderer.draw();
   });
 
@@ -85,7 +85,7 @@
     var beats;
     beats = Number(e.target.value);
     console.log(beats);
-    bBeat.setBeatFrequency(beats);
+    bBeat.setBeatRate(beats);
     return renderer.draw();
   });
 
