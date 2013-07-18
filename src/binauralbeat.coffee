@@ -1,6 +1,6 @@
 ###
 BinauralBeatJS
-v0.2.1
+v0.3.0
 Author: Cole Reed
 ichabodcole (AT) gmail.com
 
@@ -43,12 +43,14 @@ class BinauralBeat
 		@beatRate      = options.beats ? 5
 		@waveType  		 = options.waveType ? 0
 		@compressNodes = options.compressNodes ? false
+		@started       = false
 
 		# setup functions
 		@_createInternalNodes(ctx)
 		@_routeNodes()
 		@setPitch(@pitch)
 		@setWaveType(@waveType)
+
 
 	_createInternalNodes: (ctx)->
 		@leftChannel   = ctx.createOscillator()
@@ -58,8 +60,6 @@ class BinauralBeat
 
 	# Setup Audio Routing
 	_routeNodes: ()->
-		@leftChannel.connect(@channelMerger, 0, 0)
-		@rightChannel.connect(@channelMerger, 0, 1)
 		# This can be helpful when passing other audio signals through this node
 		if @compressNodes
 			@input.connect(@compressor)
@@ -68,6 +68,18 @@ class BinauralBeat
 		else
 			@input.connect(@output)
 			@channelMerger.connect(@output)
+
+	_startOscillators: ->
+		@leftChannel.start(0)
+		@rightChannel.start(0)
+
+	_connectOscillators: ->
+		@leftChannel.connect(@channelMerger, 0, 0)
+		@rightChannel.connect(@channelMerger, 0, 1)
+
+	_disconnectOscillators: ->
+		@leftChannel.disconnect()
+		@rightChannel.disconnect()
 
 	_getChannelFrequency: (channelNum)->
 		frequencyOffset = @beatRate / 2
@@ -100,15 +112,14 @@ class BinauralBeat
 		@leftChannel.setWaveTable(waveTable)
 		@rightChannel.setWaveTable(waveTable)
 
-	start: (startTime)->
-		startTime = startTime ? 0
-		@leftChannel.start(startTime)
-		@rightChannel.start(startTime)
+	start: ->
+		unless @started
+			@_startOscillators()
+			@started = true
+		@_connectOscillators()
 
-	stop: (stopTime)->
-		stopTime = stopTime ? 0
-		@leftChannel.stop(stopTime)
-		@rightChannel.stop(stopTime)
+	stop: ->
+		@_disconnectOscillators()
 
 	connect: (dest)->
 		this.output.connect(if dest.input then dest.input else dest)
