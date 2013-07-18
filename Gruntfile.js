@@ -26,12 +26,12 @@ module.exports = function(grunt){
     coffee: {
       library: {
         files: {
-          'dist/<%= pkg.name %>.js': 'src/<%= pkg.name %>.coffee'
+          'dist/<%= pkg.filename %>.js': 'src/<%= pkg.filename %>.coffee'
         }
       },
       examples: {
         files: {
-          'examples/js/lib/<%= pkg.name %>.js': 'src/<%= pkg.name %>.coffee',
+          'examples/js/lib/<%= pkg.filename %>.js': 'src/<%= pkg.filename %>.coffee',
           'examples/js/application.js': 'examples/js/application.coffee'
         }
       },
@@ -53,7 +53,7 @@ module.exports = function(grunt){
           banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
         },
         files: {
-          'dist/<%= pkg.name %>.min.js': 'dist/<%= pkg.name %>.js'
+          'dist/<%= pkg.filename %>.min.js': 'dist/<%= pkg.filename %>.js'
         }
       }
     },
@@ -73,7 +73,7 @@ module.exports = function(grunt){
         tasks: ['coffee']
       },
       min: {
-        files: ['dist/<%= pkg.name %>.js'],
+        files: ['dist/<%= pkg.filename %>.js'],
         tasks: ['uglify']
       },
       test: {
