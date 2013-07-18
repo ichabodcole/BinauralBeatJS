@@ -1,8 +1,9 @@
 {
-  "name": "binauralbeat",
-  "version": "0.2.1",
+  "name": "binauralbeatjs",
+  "version": "0.3.0",
   "author": "Cole Reed",
   "description": "Library for creating binaural beats using the Web Audio API.",
+  "filename": "binauralbeat",
   "main": "dist/binauralbeat.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

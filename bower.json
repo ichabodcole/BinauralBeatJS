@@ -1,8 +1,8 @@
 {
-  "name": "binauralbeat",
-  "version": "0.2.1",
-  "description": "Library for creating binaural beats using the Web Audio API.",
+  "name": "binauralbeatjs",
+  "version": "0.3.0",
   "author": "Cole Reed",
+  "description": "Library for creating binaural beats using the Web Audio API.",
   "license": "MIT",
   "main": "dist/binauralbeat.js",
   "homepage": "https://github.com/ichabodcole/BinauralBeatJS",
