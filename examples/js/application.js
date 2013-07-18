@@ -95,6 +95,14 @@
     return gain.gain.value = volume / 100;
   });
 
+  $("#btn-start").click(function(e) {
+    return bBeat.start();
+  });
+
+  $("#btn-stop").click(function(e) {
+    return bBeat.stop();
+  });
+
   $(".slider").trigger("change");
 
 }).call(this);

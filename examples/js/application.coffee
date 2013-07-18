@@ -69,6 +69,12 @@ $("#sldr-volume").change (e)->
     volume = Number(e.target.value)
     gain.gain.value = volume / 100
 
+$("#btn-start").click (e)->
+    bBeat.start()
+
+$("#btn-stop").click (e)->
+    bBeat.stop()
+
 $(".slider").trigger("change")
 
 # $('.btn').click();

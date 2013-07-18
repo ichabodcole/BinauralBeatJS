@@ -1,6 +1,6 @@
 /*
 BinauralBeatJS
-v0.2.1
+v0.3.0
 Author: Cole Reed
 ichabodcole (AT) gmail.com
 
@@ -48,6 +48,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       this.beatRate = (_ref1 = options.beats) != null ? _ref1 : 5;
       this.waveType = (_ref2 = options.waveType) != null ? _ref2 : 0;
       this.compressNodes = (_ref3 = options.compressNodes) != null ? _ref3 : false;
+      this.started = false;
       this._createInternalNodes(ctx);
       this._routeNodes();
       this.setPitch(this.pitch);
@@ -62,8 +63,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     };
 
     BinauralBeat.prototype._routeNodes = function() {
-      this.leftChannel.connect(this.channelMerger, 0, 0);
-      this.rightChannel.connect(this.channelMerger, 0, 1);
       if (this.compressNodes) {
         this.input.connect(this.compressor);
         this.channelMerger.connect(this.compressor);
@@ -72,6 +71,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         this.input.connect(this.output);
         return this.channelMerger.connect(this.output);
       }
+    };
+
+    BinauralBeat.prototype._startOscillators = function() {
+      this.leftChannel.start(0);
+      return this.rightChannel.start(0);
+    };
+
+    BinauralBeat.prototype._connectOscillators = function() {
+      this.leftChannel.connect(this.channelMerger, 0, 0);
+      return this.rightChannel.connect(this.channelMerger, 0, 1);
+    };
+
+    BinauralBeat.prototype._disconnectOscillators = function() {
+      this.leftChannel.disconnect();
+      return this.rightChannel.disconnect();
     };
 
     BinauralBeat.prototype._getChannelFrequency = function(channelNum) {
@@ -114,16 +128,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       return this.rightChannel.setWaveTable(waveTable);
     };
 
-    BinauralBeat.prototype.start = function(startTime) {
-      startTime = startTime != null ? startTime : 0;
-      this.leftChannel.start(startTime);
-      return this.rightChannel.start(startTime);
+    BinauralBeat.prototype.start = function() {
+      if (!this.started) {
+        this._startOscillators();
+        this.started = true;
+      }
+      return this._connectOscillators();
     };
 
-    BinauralBeat.prototype.stop = function(stopTime) {
-      stopTime = stopTime != null ? stopTime : 0;
-      this.leftChannel.stop(stopTime);
-      return this.rightChannel.stop(stopTime);
+    BinauralBeat.prototype.stop = function() {
+      return this._disconnectOscillators();
     };
 
     BinauralBeat.prototype.connect = function(dest) {
