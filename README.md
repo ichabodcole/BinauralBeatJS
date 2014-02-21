@@ -10,13 +10,13 @@ More on binaural beats <a target="_blank" href="http://en.wikipedia.org/wiki/Bin
 
     // Create a BinauralBeat instance, options is a hash with the below defaults if nothing is provided.
     var bBeat = new BinauralBeat(context, options{pitch: 440, beatRate: 5, waveType: 0, compressNodes: false});
-    
+
     // Create a new gain node to control volume
     var volume = context.createGain();
 
     // Connect to the BinauralBeat node to the gain node
     bBeat.connect(volume)
-    
+
     // Connect the gain node to the context output.
     volume.connect(context.destination)
 
@@ -26,4 +26,4 @@ More on binaural beats <a target="_blank" href="http://en.wikipedia.org/wiki/Bin
     // Finally
     bBeat.start()
 
-In addition to standard script linking, NoiseGen is AMD compliant and works great with requirejs.
+In addition to standard script linking, BinauralBeatJS is AMD compliant and works great with requirejs.
