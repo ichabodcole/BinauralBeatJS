@@ -4,6 +4,9 @@ BinauralBeatJS
 <p>A Javascript/CoffeeScript library for generating binaural beats using the Web Audio API. <a target="_blank" href="http://htmlpreview.github.com/?https://github.com/ichabodcole/BinauralBeatJS/blob/master/examples/index.html" title="BinauralBeatJS Demo">DEMO</a><br>
 More on binaural beats <a target="_blank" href="http://en.wikipedia.org/wiki/Binaural_beats">Here</a></p>
 
+### Installation
+    bower install binauralbeatjs
+
 ### Basic Usage
     // Create a new AudioContext to connect to
     var context = new webkitAudioContext()
