@@ -5,6 +5,9 @@ mediaElement = document.createElement('audio');
 describe('BinauralBeat', function () {
   before(function () {
     ctx      = allen.getAudioContext();
+    ctx.createPeriodicWave = function () {
+      return true;
+    };
     gainNode = ctx.createGain();
   }),
   beforeEach(function () {
@@ -30,8 +33,8 @@ describe('BinauralBeat', function () {
     it ('should have a beatRate property with default set to 5', function () {
       expect(this.bBeat.beatRate).to.equal(5);
     }),
-    it ('should have a waveType property with default set to 0', function () {
-      expect(this.bBeat.waveType).to.equal(0);
+    it ('should have a waveType property with default set to "sine"', function () {
+      expect(this.bBeat.waveType).to.equal('sine');
     }),
     it ('should have a compressNodes property with default set to false', function () {
       expect(this.bBeat.compressNodes).to.equal(false);
@@ -81,18 +84,18 @@ describe('BinauralBeat', function () {
     });
   });
 
-  describe('setWaveTable', function () {
-    it ('should have a method setWaveTable', function () {
-      expect(this.bBeat).to.respondTo('setWaveTable');
+  describe('setPeriodicWave', function () {
+    it ('should have a method setPeriodicWave', function () {
+      expect(this.bBeat).to.respondTo('setPeriodicWave');
     }),
-    it ('should take a WaveTable argument', function () {
+    it ('should take a PeriodicWave argument', function () {
       var _self = this;
       var real = new Float32Array(4096);
       var imag = new Float32Array(4096);
-      var waveTable = ctx.createWaveTable(real, imag);
-      expect(setWaveTable).to.not.throw();
-      function setWaveTable () {
-        _self.bBeat.setWaveTable(waveTable);
+      var periodicWave = ctx.createPeriodicWave(real, imag);
+      expect(setPeriodicWave).to.not.throw();
+      function setPeriodicWave () {
+        _self.bBeat.setPeriodicWave(periodicWave);
       }
     });
   }),
