@@ -1,10 +1,10 @@
 /*
 BinauralBeatJS
-v0.3.0
+v0.4.0
 Author: Cole Reed
 ichabodcole (AT) gmail.com
 
-Copyright (c) 2013 Cole Reed, https://github.com/ichabodcole/
+Copyright (c) 2014 Cole Reed, https://github.com/ichabodcole/
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -31,13 +31,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   var BinauralBeat;
 
   BinauralBeat = (function() {
-    BinauralBeat.SINE = 0;
+    BinauralBeat.SINE = 'sine';
 
-    BinauralBeat.SQUARE = 1;
+    BinauralBeat.SQUARE = 'square';
 
-    BinauralBeat.SAWTOOTH = 2;
+    BinauralBeat.SAWTOOTH = 'sawtooth';
 
-    BinauralBeat.TRIANGLE = 3;
+    BinauralBeat.TRIANGLE = 'triangle';
 
     function BinauralBeat(ctx, options) {
       var _ref, _ref1, _ref2, _ref3;
@@ -46,7 +46,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       options = options != null ? options : {};
       this.pitch = (_ref = options.pitch) != null ? _ref : 440;
       this.beatRate = (_ref1 = options.beats) != null ? _ref1 : 5;
-      this.waveType = (_ref2 = options.waveType) != null ? _ref2 : 0;
+      this.waveType = (_ref2 = options.waveType) != null ? _ref2 : this.constructor.SINE;
       this.compressNodes = (_ref3 = options.compressNodes) != null ? _ref3 : false;
       this.started = false;
       this._createInternalNodes(ctx);
@@ -123,9 +123,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       return this.leftChannel.type = this.rightChannel.type = this.waveType;
     };
 
-    BinauralBeat.prototype.setWaveTable = function(waveTable) {
-      this.leftChannel.setWaveTable(waveTable);
-      return this.rightChannel.setWaveTable(waveTable);
+    BinauralBeat.prototype.setPeriodicWave = function(periodicWave) {
+      this.leftChannel.setPeriodicWave(periodicWave);
+      return this.rightChannel.setPeriodicWave(periodicWave);
     };
 
     BinauralBeat.prototype.start = function() {
