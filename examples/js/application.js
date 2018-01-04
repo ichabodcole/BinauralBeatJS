@@ -1,7 +1,9 @@
 (function() {
   var analyserLeft, analyserRight, bBeat, canvas_height, canvas_width, context, gain, leftChannel, points, renderer, rightChannel, run, scale_left, scale_right, started, visualizerLeft, visualizerRight;
 
-  context = new webkitAudioContext();
+  AudioContext = window.AudioContext || window.webkitAudioContext;
+
+  context = new AudioContext();
 
   bBeat = new BinauralBeat(context);
 
