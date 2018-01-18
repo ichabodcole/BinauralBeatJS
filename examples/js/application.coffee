@@ -1,5 +1,6 @@
 # Binaural Setup
-context = new webkitAudioContext()
+AudioContext = window.AudioContext || window.webkitAudioContext;
+context = new AudioContext()
 bBeat = new BinauralBeat(context)
 leftChannel = bBeat.getChannel(0)
 rightChannel = bBeat.getChannel(1)

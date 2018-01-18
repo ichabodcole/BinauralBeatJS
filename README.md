@@ -9,7 +9,7 @@ More on binaural beats <a target="_blank" href="http://en.wikipedia.org/wiki/Bin
 
 ### Basic Usage
     // Create a new AudioContext to connect to
-    var context = new webkitAudioContext()
+    var context = new AudioContext()
 
     // Create a BinauralBeat instance, options is a hash with the below defaults if nothing is provided.
     var bBeat = new BinauralBeat(context, options{pitch: 440, beatRate: 5, waveType: 0, compressNodes: false});
